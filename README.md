@@ -1,7 +1,7 @@
 # mediaconvertdemo
 AWS Elemental MediaConvert Demo using a simple WebApp
 
-version:0.1 
+version: 0.1 (WORK IN  PROGRESS - Don't use it yet) 
 
 TODO: Improve instructions, provide CloudFormation templates, demo additional functionalities
 
@@ -37,7 +37,7 @@ Users access a website hosted in Amazon S3 running behind Amazon Cloudfront dist
  
  ### Create S3 buckets
  
- 1. Create a bucket to upload input files.
+ 1. Create a bucket to upload input files. Create a folder named `input` and another one named `thumbnails`.
  1. Create a bucket to host static website. Make sure to perform proper configurations and edit CORS configuration to allow all headers for GET and HEAD Methods:
 ```
 [
@@ -57,6 +57,16 @@ Users access a website hosted in Amazon S3 running behind Amazon Cloudfront dist
 ]
 ``` 
 We will be using this bucket for storing the output files as well.
+
+1. On the input folder upload the videos you want to test.
+1. On the S3 bucket that will host the static web site, upload the content from `static-website` folder to the root of the bucket.
+1. On the input bucket, upload all the content on `sample-videos` to "input" folder and upload all the content on `sample-thumbnails` to the "thumbnails" folder.
+
+### Create Cloudfront distribution
+Create a new Cloudfront distribution that points to the S3 bucket hosting the static website, choose to Restrict access to the bucket and let Cloudfront apply the security policy for you.
+
+Once the distribution is created, test that the static site is accessible through distribution's URL.
+
 
 ### Create the Event Control stack 
 This is based on the following instructions from AWS Samples: https://github.com/aws-samples/aws-media-services-simple-vod-workflow/blob/master/8-MediaConvertEvents/README-tutorial.md
@@ -86,3 +96,17 @@ On step 10, instead of uploading through the S3 URL, upload the provided zip fil
 1. Scroll down to "Function code" choose Actions-> Upload a .zip file. Upload `mediaconvertdemo-polljob.zip`.
 1. Add two Environment variables: CloudfrontDistribution (insert your Cloudfront distribution) and EventTable (insert the name of the DynamoDB table created earlier).
 1. Click on Deploy to save the function.
+
+### Create API gateway endpoint and resources:
+1. Create a new API gateway endpoint - Choose REST API.
+1. Create three resources: `/listvideos`, `/convert`, `poll` with a GET method for each.
+1. For `/listvideos`, configure the method to invoke lambda function "ListVideos". Check "Use Lambda integration".
+1. For  `/convert`, configure the method to invoke lambda function "StartJob". Add `key` as a String Query Parameters (do not mark it as required). Check "Use Lambda integration".
+1. For  `/poll`, configure the method to invoke lambda function "PollJob". Add `jobId` as a String Query Parameters (do not mark it as required). Check "Use Lambda integration".
+1. Make sure to enable CORS for any origin (*) on all the resources and GET methods.
+1. Deploy API to a stage so you have it ready for use.
+
+## Test web application
+1. Edit functions.js and update the url global variables at the top with the corresponding API Gateway URLs from the previous section.  
+1. Open the sample website, you should see 4 videos (if not, make sure to have uploaded all the contents from `sample-videos` and `sample-thumbnails` to `input/` and `thumbnails/` folders respectively).
+1. Push the "Convert" button on any video and wait until receiving results. You should receive a working link to the transcoded video or an error message from MediaConvert. 
