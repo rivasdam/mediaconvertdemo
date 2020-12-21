@@ -1,0 +1,48 @@
+.topnav {
+    background-color: #333;
+    text-align: center;
+    overflow: hidden;
+}
+
+.pagetitle{
+    float:none;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.gallery{
+    position:relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1,5vw);
+    grid-gap: 10px;
+}
+
+#message{
+    position:absolute;
+    top: 300px;
+    left:500px;
+}
+
+img{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 200px;
+}
+
+img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+p{
+    width: 200px;
+    text-align: center;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
