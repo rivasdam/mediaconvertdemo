@@ -1,7 +1,7 @@
 //Update with your values
-url_api_list = "https://g2jju3yz29.execute-api.us-east-1.amazonaws.com/default/MediaConvertDemo-ListVideos"
-url_api_convert = "https://0n3daufjj6.execute-api.us-east-1.amazonaws.com/default/convert";
-url_api_poll = "https://0n3daufjj6.execute-api.us-east-1.amazonaws.com/default/poll";
+url_api_list = ""
+url_api_convert = "";
+url_api_poll = "";
 
 
 function listVideos()
