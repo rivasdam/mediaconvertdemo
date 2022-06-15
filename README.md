@@ -1,7 +1,6 @@
-# mediaconvertdemo
-AWS Elemental MediaConvert Demo using a simple WebApp
+# AWS Elemental MediaConvert Demo using a simple WebApp
 
-version: 0.1 (WORK IN  PROGRESS - Don't use it yet) 
+version: 0.1 (WORK IN  PROGRESS) 
 
 TODO: Improve instructions, provide CloudFormation templates, demo additional functionalities
 
