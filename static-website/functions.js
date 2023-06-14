@@ -2,14 +2,14 @@
 url_api_list = ""
 url_api_convert = "";
 url_api_poll = "";
-
+url_api_key = ""; //get API key by secret
 
 function listVideos()
 {
     fetch(url_api_list,{
         method: 'GET',
         headers:{
-            "x-api-key": "cKpqw66KIo5pZJvw5HiZC7rRlHpuikFFa4K6kOUh",
+            "x-api-key": url_api_key,
             "Content-Type": "application/json"
         }
     })
